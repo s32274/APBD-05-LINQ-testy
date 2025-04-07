@@ -11,7 +11,8 @@ public class EmpDeptSalgradeTests
 
         List<Emp> result = (from salesman in emps
                             where salesman.Job.Equals("SALESMAN")
-                            select salesman).ToList(); 
+                            select salesman)
+                        .ToList(); 
 
         Assert.Equal(2, result.Count);
         Assert.All(result, e => Assert.Equal("SALESMAN", e.Job));
@@ -24,7 +25,12 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        List<Emp> result = null; 
+        List<Emp> unorderedEmps = (from e in emps
+                                    where e.DeptNo.Equals(30)
+                                    select e)
+                            .ToList();
+
+        List<Emp> result = unorderedEmps.OrderByDescending(e => e.Sal).ToList();
 
         Assert.Equal(2, result.Count);
         Assert.True(result[0].Sal >= result[1].Sal);
