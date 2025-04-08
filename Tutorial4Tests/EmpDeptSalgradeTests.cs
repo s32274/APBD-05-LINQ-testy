@@ -165,9 +165,16 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        // var result = null; 
-        //
-        // Assert.Contains(result, r => r.DeptNo == 30 && r.AvgSal > 1000);
+        var result = emps
+            .GroupBy(e => e.DeptNo)
+            .Select(g => new
+            {
+                DeptNo = g.Key,
+                AvgSal = g.Average(e => e.Sal)
+            })
+            .ToList();
+        
+        Assert.Contains(result, r => r.DeptNo == 30 && r.AvgSal > 1000);
     }
 
     // 10. Complex filter with subquery and join
