@@ -66,13 +66,15 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        //var result = null; 
+        var result = emps
+            .Select(e => new { e.EName, e.Sal })
+            .ToList(); 
         
-        // Assert.All(result, r =>
-        // {
-        //     Assert.False(string.IsNullOrWhiteSpace(r.EName));
-        //     Assert.True(r.Sal > 0);
-        // });
+        Assert.All(result, r =>
+        {
+        Assert.False(string.IsNullOrWhiteSpace(r.EName));
+        Assert.True(r.Sal > 0);
+        });
     }
 
     // 5. JOIN Emp to Dept
@@ -80,12 +82,30 @@ public class EmpDeptSalgradeTests
     [Fact]
     public void ShouldJoinEmployeesWithDepartments()
     {
-        var emps = Database.GetEmps();
-        var depts = Database.GetDepts();
-
-        //var result = null; 
-
-        //Assert.Contains(result, r => r.DName == "SALES" && r.EName == "ALLEN");
+        // var emps = Database.GetEmps();
+        // var depts = Database.GetDepts();
+        //
+        // var empList = (from e in emps
+        //                 select e)
+        //     .ToList();
+        // var deptList = (from d in depts
+        //                 select d)
+        //     .ToList();
+        //
+        // var joined = empList.Join(
+        //     deptList,
+        //     e => e.DeptNo,
+        //     d => d.DeptNo,
+        //     (e, d) => new
+        //     {
+        //         EmployeeName = e.EName,
+        //         Salary = e.Sal,
+        //         DepartmentName = d.DName
+        //     }).ToList();
+        //
+        // var result = joined; 
+        //
+        // Assert.Contains(result, r => r.DName == "SALES" && r.EName == "ALLEN");
     }
 
     // 6. Group by DeptNo
