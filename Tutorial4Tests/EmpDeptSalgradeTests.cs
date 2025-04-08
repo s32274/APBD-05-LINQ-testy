@@ -45,18 +45,15 @@ public class EmpDeptSalgradeTests
         var emps = Database.GetEmps();
         var depts = Database.GetDepts();
 
-        var deptList = (from d in depts
+        var deptnoList = (from d in depts
                         where d.Loc.Equals("CHICAGO")
                         select d.DeptNo)
             .ToList();
 
-        var empQuery = (from e in emps
-                where deptList.Contains(e.DeptNo)
+        var result = (from e in emps
+                where deptnoList.Contains(e.DeptNo)
                 select e)
             .ToList();
-        
-        
-        List<Emp> result = empQuery; 
 
         Assert.All(result, e => Assert.Equal(30, e.DeptNo));
     }
@@ -69,8 +66,12 @@ public class EmpDeptSalgradeTests
         var emps = Database.GetEmps();
 
         var result = emps
-            .Select(e => new { e.EName, e.Sal })
-            .ToList(); 
+            .Select(e => new 
+                {
+                    e.EName,
+                    e.Sal 
+                }
+            ).ToList(); 
         
         Assert.All(result, r =>
         {
