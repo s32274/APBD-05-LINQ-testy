@@ -86,26 +86,15 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
         var depts = Database.GetDepts();
-        
-        var empList = (from e in emps
-                        select e)
-            .ToList();
-        var deptList = (from d in depts
-                        select d)
-            .ToList();
-        
-        var joined = empList.Join(
-            deptList,
-            e => e.DeptNo,
-            d => d.DeptNo,
-            (e, d) => new JoinEmpDeptHelper
-            {
-                EName = e.EName,
-                Sal = e.Sal,
-                DName = d.DName
-            }).ToList();
-        
-        var result = joined; 
+
+        var result = (from e in emps
+                                    join d in depts on e.DeptNo equals d.DeptNo
+                                    select new
+                                    {
+                                        e.EName,
+                                        d.DName
+                                    })
+                                    .ToList();
         
         Assert.Contains(result, r => r.DName == "SALES" && r.EName == "ALLEN");
     }
