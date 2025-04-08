@@ -157,8 +157,8 @@ public class EmpDeptSalgradeTests
             where e.Sal >= s.Losal && e.Sal <= s.Hisal
             select new
             {
-                EName = e.EName,
-                Grade = s.Grade
+                e.EName,
+                s.Grade
             }).ToList();
         
         Assert.Contains(result, r => r.EName == "ALLEN" && r.Grade == 3);
