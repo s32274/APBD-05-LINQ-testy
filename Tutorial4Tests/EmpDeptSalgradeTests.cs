@@ -1,4 +1,5 @@
 ﻿using Tutorial3.Models;
+using Tutorial3Tests;
 
 public class EmpDeptSalgradeTests
 {
@@ -83,30 +84,30 @@ public class EmpDeptSalgradeTests
     [Fact]
     public void ShouldJoinEmployeesWithDepartments()
     {
-        // var emps = Database.GetEmps();
-        // var depts = Database.GetDepts();
-        //
-        // var empList = (from e in emps
-        //                 select e)
-        //     .ToList();
-        // var deptList = (from d in depts
-        //                 select d)
-        //     .ToList();
-        //
-        // var joined = empList.Join(
-        //     deptList,
-        //     e => e.DeptNo,
-        //     d => d.DeptNo,
-        //     (e, d) => new
-        //     {
-        //         EmployeeName = e.EName,
-        //         Salary = e.Sal,
-        //         DepartmentName = d.DName
-        //     }).ToList();
-        //
-        // var result = joined; 
-        //
-        // Assert.Contains(result, r => r.DName == "SALES" && r.EName == "ALLEN");
+        var emps = Database.GetEmps();
+        var depts = Database.GetDepts();
+        
+        var empList = (from e in emps
+                        select e)
+            .ToList();
+        var deptList = (from d in depts
+                        select d)
+            .ToList();
+        
+        var joined = empList.Join(
+            deptList,
+            e => e.DeptNo,
+            d => d.DeptNo,
+            (e, d) => new JoinEmpDept
+            {
+                EName = e.EName,
+                Sal = e.Sal,
+                DName = d.DName
+            }).ToList();
+        
+        var result = joined; 
+        
+        Assert.Contains(result, r => r.DName == "SALES" && r.EName == "ALLEN");
     }
 
     // 6. Group by DeptNo
