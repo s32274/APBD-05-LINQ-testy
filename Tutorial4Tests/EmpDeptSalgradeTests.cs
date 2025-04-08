@@ -48,11 +48,12 @@ public class EmpDeptSalgradeTests
                         where d.Loc.Equals("CHICAGO")
                         select d.DeptNo)
             .ToList();
-        
+
         var empQuery = (from e in emps
                 where deptList.Contains(e.DeptNo)
                 select e)
             .ToList();
+        
         
         List<Emp> result = empQuery; 
 
