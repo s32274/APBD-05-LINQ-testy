@@ -98,7 +98,7 @@ public class EmpDeptSalgradeTests
             deptList,
             e => e.DeptNo,
             d => d.DeptNo,
-            (e, d) => new JoinEmpDept
+            (e, d) => new JoinEmpDeptHelper
             {
                 EName = e.EName,
                 Sal = e.Sal,
@@ -117,9 +117,20 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        // var result = null; 
-        //
-        // Assert.Contains(result, g => g.DeptNo == 30 && g.Count == 2);
+        // var result = (from e in emps
+        //         group e by e.DeptNo)
+        //     .ToList();
+
+        var result = emps
+            .GroupBy(e => e.DeptNo)
+            .Select(g => new
+            {
+                DeptNo = g.Key,
+                Count = g.Count()
+            })
+            .ToList();
+        
+        Assert.Contains(result, g => g.DeptNo == 30 && g.Count == 2);
     }
 
     // 7. SelectMany (simulate flattening)
